@@ -34,3 +34,24 @@ def check_monthly_equip_work_time(
             f"Наработка камеры заполнена, выберите другую камеру. Ограничение месячной наработки \
                     700 часов. ИО № {eq_name} - наработка {time_sum} часов."
         )
+def check_date_endings(
+        date_start,date_stop_expected,
+        date_stop
+):
+    if date_stop:
+        if date_stop < date_start or date_stop_expected < date_start:
+            raise ValidationError(
+                'End date cant be earlier than start date'
+            )
+    else: 
+        if date_stop_expected < date_start:
+            raise ValidationError(
+                'End date cant be earlier than start date'
+            )
+def check_EquipmentWork_date_endings(
+        date_start,date_stop
+):
+    if date_start > date_stop:
+        raise ValidationError(
+                'End date cant be earlier than start date'
+            )

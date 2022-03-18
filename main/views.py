@@ -228,6 +228,7 @@ def complete_date(request, date: str):
         line_list = list_of_month_complete_lines(date)
         context_menu = menu
         context = {'list': line_list, 'date': date, 'menu': context_menu}
+        print(context['list'])
         return render(request, 'main/complete_date.html', context)
     except Exception as e:
         print(f'No complete Line objects. Error: {e}')

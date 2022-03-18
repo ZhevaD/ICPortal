@@ -89,5 +89,16 @@ class LineModelTest(TestCase):
         true_result = Line.objects.get(pk=1)
         self.assertEquals(check[0], true_result)
 
-
-
+    def check_date_endings(self):
+        with self.assertRaise(ValidationError):
+            check_date_endings(
+                Line.objects.get(pk=2).date_stop,
+                Line.objects.get(pk=2).date_stop_expected,
+                Line.objects.get(pk=2).date_start
+                )
+    def check_EquipmentWork_date_endings(self):
+        with self.assertRaise(ValidationError):
+            check_EquipmentWork_date_endings(
+                Line.object.get(pk=2).date_stop,
+                Line.object.get (pk=2).date_start
+            )

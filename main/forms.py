@@ -29,7 +29,9 @@ class AddPostForm(forms.ModelForm):
         cleaned_data = super().clean()
         status = cleaned_data.get('cats')
         test_type = cleaned_data.get('test_type')
+        date_start = cleaned_data.get('date_start')
         date_stop = cleaned_data.get('date_stop')
+        date_stop_expected = cleaned_data.get('date_stop_expected')
         act_number = cleaned_data.get('act_number')
         customer = cleaned_data.get('customer')
         act = cleaned_data.get('act')
@@ -39,7 +41,11 @@ class AddPostForm(forms.ModelForm):
             status, test_type, date_stop,
             customer, act_number, act, programm
         )
-
+        # checking start date cant be later than stop date
+        check_date_endings(
+            date_start,date_stop_expected,
+            date_stop
+        )
 
 class AddEquipmentForm(forms.ModelForm):
     """
@@ -71,10 +77,16 @@ class AddEquipmentForm(forms.ModelForm):
         eq_name = Equipment.objects.get(name=name_input)
         work_time = cleaned_data.get('work_time')
         equip = EquipmentWork.objects.filter(eq_name=eq_name)
+        date_start = cleaned_data.get('date_start')
+        date_stop = cleaned_data.get('date_stop')
         # Checking max monthly working time fo equipment
         check_monthly_equip_work_time(
                 date_input, eq_name,
                 work_time, equip
+        )
+        # Checking that end date later than start date
+        check_EquipmentWork_date_endings(
+                date_start,date_stop
         )
 
 

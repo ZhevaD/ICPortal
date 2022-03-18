@@ -31,6 +31,7 @@ def list_of_month_complete_lines(date):
     year = date[:4]
     month = date[-2:]
     complete_cat = Category.objects.get(id=2)
+    print(complete_cat.name)
     line_list = Line.objects.filter(date_stop__year=year,
                                     date_stop__month=month,
                                     cats=complete_cat)
